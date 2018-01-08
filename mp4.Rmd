@@ -1,0 +1,103 @@
+---
+title: "Why Social Issues are Comical to Movie and TV Studios"
+author: "By Perla Garcia, Kiki Teshome, Zoraida Colon"
+date: "12/1/2017"
+output: 
+  html_document:
+    code_folding: hide
+    theme: cosmo
+---
+<style>
+body{
+  font-size: 16px;
+}
+</style>
+![](http://www.yellmagazine.com/wp-content/uploads/2017/02/getout-thumb.jpg)
+
+
+```{r  message = TRUE, eval = FALSE, echo =TRUE}
+
+ library(mdsr)
+ library(RMySQL)
+ db <- dbConnect_scidb(dbname = "imdb")
+
+ class(db)
+ query <- db %>%
+     dbGetQuery("SELECT t.movie_id, t.info, COUNT(*) AS total,t2.production_year
+                 FROM imdb.movie_info t
+                 JOIN imdb.aka_title t2 on t.movie_id= t2.movie_id
+                 WHERE t.info_type_id = 3
+                 AND t.info = 'Comedy'
+                 AND t2.production_year IS NOT NULL
+                 AND t2.production_year > 1940
+                 AND t2.production_year <= 2017
+                 GROUP BY t2.movie_id
+                 HAVING COUNT(*) > 1
+                 ORDER BY t2.production_year;")
+
+
+```
+
+Earlier this month, news that the film *Get Out* had been submitted to the Comedy category at the Golden Globes sparked much outrage from fans. Fans felt that the film’s haunting portrayal of racism should land it in a more “serious” category. For comedy-dramas, such as *Get Out*, *Orange is the new Black*, and *Jane the Virgin*, the exploration of political themes can make classifying them as multiple genres insulting or inaccurate to their intended audience. Comedies that target political and social issues often employ other genres to intensify their message. This multiplicity of genres causes confusion in the TV academy because of the new ideas these movies possess. What does this genre overlap reveal about the way we understand comedy films and TV shows?
+
+Remarking on the need for a new category at award shows like “dramedy” that can encompass shows with elements of both a comedy and a drama, Flavorwire blog writes *“Though [dramedy] would undoubtedly be an overcrowded category, providing far more competition than networks desire. The one thing that is clear is that television genres are more fluid than ever, and the TV Academy has to find a way to keep up.”* Flavorwire acknowledges a major issue of studios today; the media industry is seemingly including more works by people of underrepresented backgrounds, at the behest of audiences and social media activists, but has not thought about how to categorize these works.
+
+
+Understanding the link between the complicated genre of comedy and awards show strategies can help us predict how comedy will continue to develop in the future. Recognizing the overlap of genres is necessary in order to decrease competition among different films and TV shows, respectively. By recognizing these shifts in genres, the Academy can begin to not only accurately classify films but also alleviate the frustration underrepresented communities feel when their art is misrepresented. 
+
+Many films that include social commentary and include other genres are simply classified as comedies, which may ignore the seriousness of their message. As the media industry slowly expands to showcase art produced by marginalized groups, the media they produce may not fit squarely into genres created years ago. After Get Out was classified as a comedy for The Golden Globes, Jordan Peele expressed frustration at the inability of the TV academy to grasp the seriousness of the film: *“We don’t want our truth trivialized. The label of comedy is often a trivial thing. The real question is, what are you laughing at?”* Peele questions the tendency of studios to classify films about social issues by and for people of color as comedies, which trivializes the complex social issues they address and reduces their social commentary into entertainment to be consumed by white viewers.
+
+
+
+```{r message = FALSE, echo = TRUE, fig.align = "center"}
+
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+library(tidyverse)
+library(plotly) 
+library(ggthemes)
+library(scales)
+
+
+
+load("~/Desktop/query.rda")
+
+plot <- ggplot(data = query, aes(production_year, total, colour=info))+
+  geom_point()+
+  labs(x = "Production Year", y = "Total Number of Genres", colour = "Genre", title = "Genre overlap in Comedy" )+
+  theme_bw()+
+  theme(legend.position="none")
+
+ggplotly(plot)
+```
+
+
+
+As the data graph above from the IMDB database shows, comedies have experienced an increase in genre multiplicity since 2000. Each dot represents a film or tv show classified as a “comedy”. The quickly evolving nature of TV and film requires the Academy to keep up with new films that may blur the lines between genres. Film executives have realized that combining genres or adding action elements to otherwise actionless genres will increase revenue. This trend explains the tendency of studios to attribute multiple genres to new movies.  
+
+The multi-categorization of comedies can be partly attributed to the shift in television after popular drama shows such as *Mad Men* and *Breaking Bad* ruled the airwaves. The successful, popular comedies of today--*Orange is the New Black*, *Jane the Virgin*,  *Black-ish*, *The Mindy Project*--are a stark contrast to the traditional, white, male-driven drama of before. The rise of the racially-mixed, politically-charged comedy coincides with the growing distribution opportunities available to content creators. As a result of social media, television networks and film studios are now able to receive feedback from multiple different audiences as well as compete with online distributors such as Netflix.
+
+However, there are viewers and media executives who are in agreement with the classification of movies and TV shows about social issues as comedies. In *Why You Shouldn’t Be in Your Feelings Over ‘Get Out’ Being Submitted as a Comedy For Golden Globes*, writer Khal emphasizes the injustices black movies face in an #OscarSoWhite world. He points out the actuality behind Get Out having good chances at winning in categories such as drama or social thriller and acknowledges how Get Out had to play into the genres already recognized by the studio/Academy for their advantage.
+
+In order for Get Out to receive recognition at the Golden Globes, studio executives decided to submit it as a comedy to have a better chance of winning an award. This submission received much backlash:
+
+<blockquote text-align:center; class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">Black filmmakers: let&#39;s make a cinematic hyperbolic representation of the real ways black bodies are hypersexualized/used commercially and simultaneously disrespected <br>Why pea pull: *slaps knee* 🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣🤣 <a href="https://t.co/6gD20eKEb8">https://t.co/6gD20eKEb8</a></p>&mdash; Cheminista Jones 🔬 (@fupaluchadora) <a href="https://twitter.com/fupaluchadora/status/930641677341077504?ref_src=twsrc%5Etfw">November 15, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">White privilege is watching &quot;Get Out&quot; and thinking it was funny. <a href="https://t.co/jZfbfEUDen">https://t.co/jZfbfEUDen</a></p>&mdash; blaqzenon (@Blaqzenon) <a href="https://twitter.com/Blaqzenon/status/930665838297866240?ref_src=twsrc%5Etfw">November 15, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+Including backlash from Get Out's own actor Lil Rel Howery:
+
+
+
+
+<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">But if I can be honest this is weird to me... Their is nothing funny about racism... Was it that unrealistic lol <a href="https://t.co/5xSXBmatfP">https://t.co/5xSXBmatfP</a></p>&mdash; Lil Rel Howery (@LilRel4) <a href="https://twitter.com/LilRel4/status/930552925692116994?ref_src=twsrc%5Etfw">November 14, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+This reveals that studio executives are aware that the TV academy would not have taken Get Out seriously as a drama and so they submitted it as a comedy without thinking about the effects this would play on the message of the film as a whole.
+
+After his initial frustration about this, Peele echoed Khal’s statements while also pointing out that movies involving social commentary should be taken seriously, regardless of genre: *“At the end of the day, call ‘Get Out’ horror, comedy, drama, action or documentary, I don’t care. Whatever you call it, just know it’s our truth”*.  Peele brings up another point, is the genre of a movie as significant as the message?
+
+While Peele's statement is genuine, it fails to take into account how genre classification silences and distorts the messages of some filmmakers and refuses to understand the current evolution of media. Now that these TV shows and films are more readily accessible to the main population and receiving more recognition, the genre classification system needs to evolve. In order to honor the artistry of TV and film productions, more people of marginalized groups need to be involved in media to understand how to respectfully categorize works created by underrepresented people. 
+
+
+
