@@ -3,7 +3,7 @@ title: "Why Social Issues are Comical to Movie and TV Studios"
 author: "By Perla Garcia, Kiki Teshome, Zoraida Colon"
 date: "12/1/2017"
 output: 
-  html_document:
+  html_document:true
     code_folding: hide
     theme: cosmo
 ---
